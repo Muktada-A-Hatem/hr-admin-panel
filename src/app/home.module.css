@@ -1,0 +1,9 @@
+.root_container {
+  padding: var(--v-padding) var(--h-padding);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  height: calc(100dvh - var(--v-padding) * 2);
+}
