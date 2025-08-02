@@ -3,7 +3,7 @@ import styles from "./home.module.css";
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme/theme";
+import theme from "./theme";
 
 export default function RootLayout({
   children,

@@ -1,5 +1,6 @@
 "use client";
 
+import { Opacity } from "@mui/icons-material";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 let theme = createTheme({
@@ -35,6 +36,46 @@ let theme = createTheme({
           height: "3.5rem",
           fontSize: "2rem",
           fontWeight: "800",
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "5px",
+          overflow: "hidden",
+          "&.Mui-selected": {
+            backgroundColor: "var(--primary-color)",
+          },
+          "&.Mui-selected:hover": {
+            backgroundColor: "var(--primary-dark)",
+          },
+          ":hover": {
+            backgroundColor: "var(--primary-light)",
+          },
+        },
+      },
+    },
+    MuiListItemIcon: {
+      styleOverrides: {
+        root: {
+          color: "var(--secondary-color)",
+          ".Mui-selected &": { color: "var(--reverse-text-color)" },
+        },
+      },
+    },
+    MuiListItemText: {
+      defaultProps: {
+        primaryTypographyProps: {
+          variant: "h5",
+        },
+      },
+      styleOverrides: {
+        primary: {
+          color: "var(--text-color)",
+          ".Mui-selected &": {
+            color: "var(--reverse-text-color)",
+          },
         },
       },
     },
