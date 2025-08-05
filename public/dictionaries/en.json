@@ -1,0 +1,26 @@
+{
+  "login" : {
+    "loginh1": "Login",
+    "loginh2start": "Sign in to your ",
+    "loginh2middle": "admin",
+    "loginh2end": " panel.",
+    "logininputlabel1": "ACCOUNT NAME",
+    "logininputlabel2": "PASSWORD",
+    "loginbuttonlabel": "LOGIN"
+  },
+
+  "navbar" : {
+    "item1" : "Overview",
+    "item2" : "Requests",
+    "item3" : "Employees",
+    "item4" : "Certificates",
+    "item5" : "Roadmaps",
+    "settings" : "SETTINGS"
+  },
+
+  "lang-button" : {
+    "english" : "English",
+    "arabic" : "Arabic",
+    "japanese" : "Japanese"
+  }
+}

@@ -5,7 +5,7 @@ import { BottomPanel, ShrunkenBottomPanel } from "./navBottomPanel";
 import FancyHR from "../fancy-hr/fancy-hr";
 
 import React from "react";
-
+import { useTranslation } from "react-i18next";
 import {
   Button,
   List,
@@ -22,16 +22,18 @@ import People from "@mui/icons-material/PeopleAlt";
 import Certificates from "@mui/icons-material/WorkspacePremium";
 import Roadmaps from "@mui/icons-material/AddRoad";
 
-export default function Sidebar() {
+const Sidebar = ({}) => {
+  const navBreakPoint = 800;
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [Shrunken, setShrunken] = React.useState(false);
   const [Locked, setLocked] = React.useState(true);
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     const NavElemant = document.getElementById("navSidebar");
     if (NavElemant) {
       NavElemant.addEventListener("mouseenter", (event) => {
-        if (window.innerWidth > 600) {
+        if (window.innerWidth > navBreakPoint) {
           NavElemant.classList.add("expand");
           setShrunken(true);
         }
@@ -44,11 +46,11 @@ export default function Sidebar() {
 
       if (typeof window !== undefined) {
         function handleResize() {
-          if (window.innerWidth < 600) {
+          if (window.innerWidth < navBreakPoint) {
             setLocked(false);
             setShrunken(false);
           } else {
-            setShrunken(true);
+            setShrunken(false);
           }
         }
         window.addEventListener("resize", handleResize);
@@ -89,7 +91,7 @@ export default function Sidebar() {
               <ListItemIcon>
                 <BarChart />
               </ListItemIcon>
-              <ListItemText primary="Overview" />
+              <ListItemText primary={t("navbar.item1")} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -100,7 +102,7 @@ export default function Sidebar() {
               <ListItemIcon>
                 <Email />
               </ListItemIcon>
-              <ListItemText primary="Requests" />
+              <ListItemText primary={t("navbar.item2")} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -111,7 +113,7 @@ export default function Sidebar() {
               <ListItemIcon>
                 <People />
               </ListItemIcon>
-              <ListItemText primary="Employees" />
+              <ListItemText primary={t("navbar.item3")} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -122,7 +124,7 @@ export default function Sidebar() {
               <ListItemIcon>
                 <Certificates />
               </ListItemIcon>
-              <ListItemText primary="Certificates" />
+              <ListItemText primary={t("navbar.item4")} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -133,7 +135,7 @@ export default function Sidebar() {
               <ListItemIcon>
                 <Roadmaps />
               </ListItemIcon>
-              <ListItemText primary="Roadmaps" />
+              <ListItemText primary={t("navbar.item5")} />
             </ListItemButton>
           </ListItem>
         </List>
@@ -164,4 +166,6 @@ export default function Sidebar() {
       )}
     </div>
   );
-}
+};
+
+export default Sidebar;

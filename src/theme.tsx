@@ -5,6 +5,16 @@ import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 let theme = createTheme({
   cssVariables: true,
+  direction: "ltr",
+  breakpoints: {
+    values: {
+      xs: 400, // Extra small (default)
+      sm: 800, // Small (default)
+      md: 1000, // Medium (default)
+      lg: 1200, // Large (default)
+      xl: 1536, // Extra large (default)
+    },
+  },
   palette: {
     mode: "light",
     primary: {

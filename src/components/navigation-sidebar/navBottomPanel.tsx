@@ -1,5 +1,6 @@
 import { Typography } from "@mui/material";
 import React from "react";
+import { useTranslation, UseTranslation } from "next-i18next";
 
 import Power from "@mui/icons-material/PowerSettingsNew";
 import Gear from "@mui/icons-material/Settings";
@@ -19,6 +20,7 @@ export const BottomPanel: React.FC<BottomPanelProps> = ({
   handleLockClick,
   styles,
 }) => {
+  const { t } = useTranslation();
   return (
     <div className={styles.naviBottomPanel}>
       <div style={{ display: "flex", flexDirection: "row" }}>
@@ -44,7 +46,7 @@ export const BottomPanel: React.FC<BottomPanelProps> = ({
           }}
         >
           <Typography variant="h6" color="white">
-            SETTINGS
+            {t("navbar.settings")}
           </Typography>
           <Gear sx={{ fontSize: "1.5rem" }} />
         </button>

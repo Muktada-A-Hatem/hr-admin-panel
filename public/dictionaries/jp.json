@@ -1,0 +1,26 @@
+{
+    "login" : {
+        "loginh1": "ログイン",
+        "loginh2start": "あなたの",
+        "loginh2middle": "管理",
+        "loginh2end": "パネルにログインしてください。",
+        "logininputlabel1": "アカウント名",
+        "logininputlabel2": "パスワード",
+        "loginbuttonlabel": "ログイン"
+    },
+
+    "navbar": {
+        "item1": "概要",
+        "item2": "リクエスト",
+        "item3": "従業員",
+        "item4": "証明書",
+        "item5": "ロードマップ",
+        "settings": "設定"
+    },
+
+    "lang-button": {
+        "english": "英語",
+        "arabic": "アラビア語",
+        "japanese": "日本語"
+  }
+}

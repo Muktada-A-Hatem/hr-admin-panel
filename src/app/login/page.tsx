@@ -1,16 +1,20 @@
 "use client";
 
-import React, { useEffect } from "react";
 import Cookies from "js-cookie";
 import generateUUID from "./uuid";
 
 import Input from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import FancyHR from "./../components/fancy-hr/fancy-hr";
+import FancyHR from "../../components/fancy-hr/fancy-hr";
 import styles from "./login.module.css";
 
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
+
+import { Checkpassword } from "@/utils/password-checker";
+import Header from "@/components/header/header";
+import { cookies } from "next/headers";
 
 interface RequestBody {
   email: string;
@@ -21,7 +25,10 @@ interface RequestBody {
 export default function Login() {
   const [accountName, setAccountName] = useState("");
   const [password, setPassword] = useState("");
+  const [passError, setPassError] = useState(false);
+  const [passErrorText, setPassErrorText] = useState([""]);
   const [deviceID, setDeviceID] = React.useState("");
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     setDeviceID(getOrSetDeviceIdentifier());
@@ -52,23 +59,47 @@ export default function Login() {
         deviceID: deviceID,
       };
 
-      let response = await fetch("http://192.168.68.59/api/Auth/Login", {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify(Data),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
+      const testData: RequestBody = {
+        email: "test@gmail.com",
+        password: "P@ssword12345",
+        deviceID: "string",
+      };
+
+      let response = await fetch(
+        "http://" + process.env.NEXT_PUBLIC_PUBLIC_API_URL + "/api/Auth/Login",
+        {
+          method: "POST",
+          body: JSON.stringify(testData),
+          headers: {
+            "content-type": "application/json",
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        const JSONBody = await response.json();
+        Cookies.set("refreshToken", JSONBody.data.token, {});
+        Cookies.set("userID", JSONBody.data.userID, {});
       }
 
-      const data = await response.json();
-      console.log(data);
-    } catch {
-      console.log("HTTP Error");
+      // console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  function updatePassword(
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    const PassVal = Checkpassword(event.target.value);
+    if (PassVal.Validity) {
+      setPassword(event.target.value);
+      setPassError(false);
+    } else {
+      setPassError(true);
+      setPassErrorText(PassVal.Errors);
     }
   }
 
@@ -83,11 +114,13 @@ export default function Login() {
       <div className={styles.login_content_container}>
         <div className={styles.login_subcontent_container}>
           <div>
-            <Typography variant="h2">Login</Typography>
+            <Typography variant="h2">{t("login.loginh1")}</Typography>
             <Typography variant="h4">
-              Sign in to your{" "}
-              <span style={{ color: "var(--primary-color)" }}>admin</span>{" "}
-              panel.
+              {t("login.loginh2start")}
+              <span style={{ color: "var(--primary-color)" }}>
+                {t("login.loginh2middle")}
+              </span>
+              {t("login.loginh2end")}
             </Typography>
           </div>
 
@@ -98,30 +131,53 @@ export default function Login() {
             onSubmit={formSubmit}
           >
             <Input
-              label="ACCOUNT NAME"
+              label={t("login.logininputlabel1")}
               variant="outlined"
               required
               onChange={(e) => setAccountName(e.target.value)}
             ></Input>
             <Input
-              label="PASSWORD"
+              label={t("login.logininputlabel2")}
               type="password"
               variant="outlined"
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => updatePassword(e)}
               required
             ></Input>
+            {passError ? (
+              <Typography variant="subtitle1" color="red">
+                {passErrorText.map((item, index) => (
+                  // Add a line break after each item except the last one
+                  <span key={index}>
+                    {item}
+                    {index < passErrorText.length - 1 && <br />}
+                  </span>
+                ))}
+              </Typography>
+            ) : null}
 
             <FancyHR />
-
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              color="primary"
-            >
-              LOGIN
-            </Button>
+            {passError ? (
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="primary"
+                disabled
+              >
+                {t("login.loginbuttonlabel")}
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                color="primary"
+              >
+                {t("login.loginbuttonlabel")}
+              </Button>
+            )}
           </form>
+          <Header Title="Meow"></Header>
         </div>
 
         <div className={styles.login_divider_container}></div>

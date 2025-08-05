@@ -1,0 +1,26 @@
+{
+    "login" : {
+        "loginh1": "تسجيل الدخول",
+        "loginh2start": " قم بتسجيل الدخول إلى",
+        "loginh2middle": " لوحة الإدارة ",
+        "loginh2end": "الخاصة بك",
+        "logininputlabel1": "إسم الحساب",
+        "logininputlabel2": "كلمة المرور",
+        "loginbuttonlabel": "تسجيل الدخول"
+    },
+
+    "navbar": {
+        "item1": "نظرة عامة",
+        "item2": "الطلبات",
+        "item3": "الموظفين",
+        "item4": "الشهادات",
+        "item5": "خرائط الطريق",
+        "settings": "الإعدادات"
+    },
+
+    "lang-button": {
+        "english": "الإنجليزية",
+        "arabic": "العربية",
+        "japanese": "اليابانية"
+    }
+}

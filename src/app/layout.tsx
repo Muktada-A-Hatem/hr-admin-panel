@@ -1,9 +1,16 @@
-import "./globals.css";
+"use client";
+
+import React from "react";
+import "@/globals.css";
 import styles from "./home.module.css";
+import theme from "@/theme";
 
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme";
+import { AuthProvider } from "@/utils/auth-context";
+import { I18nextProvider } from "react-i18next";
+import DirectionProvider from "@/utils/direction-provider";
+import i18n from "@/utils/i18n";
 
 export default function RootLayout({
   children,
@@ -11,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr">
       <head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
         <link
@@ -21,7 +28,13 @@ export default function RootLayout({
       </head>
       <body className={styles.root_container}>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <AuthProvider>
+            <I18nextProvider i18n={i18n}>
+              <DirectionProvider>
+                <ThemeProvider theme={theme}>{children}</ThemeProvider>
+              </DirectionProvider>
+            </I18nextProvider>
+          </AuthProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
