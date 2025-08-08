@@ -1,181 +1,228 @@
 "use client";
 
 import * as React from "react";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
-import TableRow from "@mui/material/TableRow";
-import TableFooter from "@mui/material/TableFooter";
+import {
+  Button,
+  FormControl,
+  FormControlLabel,
+  MenuItem,
+  Select,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import Input from "@mui/material/TextField";
+import Link from "next/link";
 
 import styles from "./list.module.css";
+import FancyHR from "../fancy-hr/fancy-hr";
 
-interface listProps {
-  Title: string;
-  Type: "emp" | "req" | "cer" | "rms";
-  Variant: "full" | "shrunken";
+interface ListProps {
+  title?: string;
+  search?: boolean;
+  dense?: boolean;
+  func?: React.ReactNode[];
+  columns: string[];
+  rows: any[][];
+  pagination?: number[];
+  count?: number;
+  onclick?: (row: any, key: number) => void;
 }
 
-interface Column {
-  id: "name" | "code" | "population" | "size" | "density";
-  label: string;
-  minWidth?: number;
-  align?: "right";
-  format?: (value: number) => string;
-}
-
-const columns: readonly Column[] = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
-  {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
+const list: React.FC<ListProps> = ({
+  title = "",
+  search = false,
+  dense = false,
+  func = [],
+  columns,
+  rows,
+  pagination = [10, 25, 50],
+  onclick = (r: any, k: number) => {
+    r.preventDefault();
   },
-  {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value: number) => value.toLocaleString("en-US"),
-  },
-  {
-    id: "density",
-    label: "Density",
-    minWidth: 170,
-    align: "right",
-    format: (value: number) => value.toFixed(2),
-  },
-];
+}) => {
+  const [searchText, setSearchText] = React.useState("");
+  const [searchAttribute, setSearchAttribute] = React.useState(0);
 
-interface Data {
-  name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
-}
+  const [density, setDensity] = React.useState(false);
+  const [tableSize, setTableSize] = React.useState<"small" | "medium">(
+    "medium"
+  );
 
-function createData(
-  name: string,
-  code: string,
-  population: number,
-  size: number
-): Data {
-  const density = population / size;
-  return { name, code, population, size, density };
-}
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(pagination[0]);
 
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
+  const handleSearch = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setSearchText(event.target.value);
+  };
 
-const list: React.FC<listProps> = ({ Title, Type, Variant }) => {
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const handleSearchAttribute = (event: any, child: any) => {
+    setSearchAttribute(child.props["data-index"]);
+    console.log(child.props["data-index"]);
+  };
+
+  const handleHrefClick = (
+    row: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (!(row.ctrlKey || row.metaKey)) {
+      row.preventDefault();
+    }
+  };
+
+  const handleChangeDense = () => {
+    if (density) {
+      setDensity(false);
+      setTableSize("medium");
+    } else {
+      setDensity(true);
+      setTableSize("small");
+    }
+  };
 
   const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
+    setCurrentPage(newPage);
   };
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setRowsPerPage(+event.target.value);
-    setPage(0);
+    setCurrentPage(0);
   };
 
   return (
     <div className={styles.list_container}>
-      <Paper
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-        }}
-      >
-        <TableContainer
-          className={styles.scrollableContainer}
-          sx={{ maxHeight: "100%" }}
-        >
-          <Table
-            stickyHeader
-            aria-label="sticky table"
-            sx={{ minWidth: "1rem" }}
-          >
-            <TableHead sx={{ minWidth: "1rem" }}>
-              <TableRow sx={{ minWidth: "1rem" }}>
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <div className={styles.list_header_container}>
+        <div className={styles.list_header_left_side}>
+          {/* Rendering the title*/}
+          {title == "" ? null : <Typography variant="h4">{title}</Typography>}
+          <FancyHR vertical ballsize="0px" length="80%" thickness="1px" />
+          {search ? (
+            /* Rendering the search box*/
+            <div className={styles.search_component}>
+              <Input
+                label="Search"
+                variant="outlined"
+                onChange={(e) => handleSearch(e)}
+                sx={{
+                  "& fieldset": {
+                    borderInlineEnd: "none",
+                    borderStartEndRadius: 0,
+                    borderEndEndRadius: 0,
+                  },
+                }}
+              ></Input>
+              {/* Rendering the attribute box*/}
+              <FormControl>
+                <Select
+                  value={searchAttribute}
+                  onChange={(event, child) =>
+                    handleSearchAttribute(event, child)
+                  }
+                  autoWidth
+                  sx={{
+                    "& fieldset": {
+                      borderInlineStart: "none",
+                      borderStartStartRadius: 0,
+                      borderEndStartRadius: 0,
+                    },
+                  }}
+                >
+                  {columns.map((value, index) => (
+                    <MenuItem value={index} data-index={index}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </div>
+          ) : null}
+        </div>
+
+        {/* Rendering all custom components for actions*/}
+        <div className={styles.list_header_right_side}>
+          {func?.map((component, index) => (
+            <div key={index}>{component}</div>
+          ))}
+        </div>
+      </div>
+      {/* Rendering the table*/}
+      <TableContainer className={styles.scrollableContainer}>
+        <Table stickyHeader aria-label="sticky table" size={tableSize}>
+          {/* Rendering the header columns*/}
+          <TableHead>
+            <TableRow>
+              {columns.map((columnName, index) => (
+                <TableCell key={index} align="left">
+                  {columnName}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          {/* Rendering the rows*/}
+          <TableBody>
+            {rows
+              .filter((row) =>
+                row[searchAttribute]
+                  .toString()
+                  .toLowerCase()
+                  .includes(searchText.toLowerCase())
+              )
+              .slice(
+                currentPage * rowsPerPage,
+                currentPage * rowsPerPage + rowsPerPage
+              )
+              .map((row, rowIndex) => (
+                <TableRow
+                  hover
+                  role="checkbox"
+                  tabIndex={-1}
+                  key={rowIndex}
+                  component={Link}
+                  href={window.location.href + "/" + rowIndex.toString()}
+                  sx={{ textDecoration: "none" }}
+                  onClick={(event) => handleHrefClick(event)}
+                  onDoubleClick={(event) => onclick(event, rowIndex)}
+                >
+                  {row.map((cell, cellIndex) => (
+                    <TableCell key={cellIndex} align="left">
+                      {cell}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <div className={styles.paginationContainer}>
+        {dense ? (
+          <FormControlLabel
+            control={<Switch checked={density} />}
+            label="Dense padding"
+            onChange={handleChangeDense}
+          />
+        ) : (
+          <div />
+        )}
         <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
+          rowsPerPageOptions={pagination}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
-          page={page}
+          page={currentPage}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{ overflow: "hidden", minHeight: "3rem" }}
-        />
-      </Paper>
+          sx={{ borderTop: "none", overflow: "hidden" }}
+        ></TablePagination>
+      </div>
     </div>
   );
 };

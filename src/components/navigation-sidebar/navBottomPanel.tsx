@@ -1,3 +1,5 @@
+"use client";
+
 import { Typography } from "@mui/material";
 import React from "react";
 import { useTranslation, UseTranslation } from "next-i18next";
@@ -28,8 +30,8 @@ export const BottomPanel: React.FC<BottomPanelProps> = ({
           className={styles.button}
           style={{
             background: "var(--nice-red)",
-            borderTopLeftRadius: "2.25rem",
-            borderBottomLeftRadius: "2.25rem",
+            borderStartStartRadius: "2.25rem",
+            borderEndStartRadius: "2.25rem",
           }}
           onClick={() => {
             open("/login");
@@ -41,8 +43,8 @@ export const BottomPanel: React.FC<BottomPanelProps> = ({
           className={styles.button}
           style={{
             background: "var(--secondary-color)",
-            borderTopRightRadius: "2.25rem",
-            borderBottomRightRadius: "2.25rem",
+            borderStartEndRadius: "2.25rem",
+            borderEndEndRadius: "2.25rem",
           }}
         >
           <Typography variant="h6" color="white">

@@ -21,6 +21,7 @@ import Email from "@mui/icons-material/Email";
 import People from "@mui/icons-material/PeopleAlt";
 import Certificates from "@mui/icons-material/WorkspacePremium";
 import Roadmaps from "@mui/icons-material/AddRoad";
+import { Key } from "@mui/icons-material";
 
 const Sidebar = ({}) => {
   const navBreakPoint = 800;
@@ -63,7 +64,7 @@ const Sidebar = ({}) => {
   });
 
   const handleListItemClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     index: number
   ) => {
     setSelectedIndex(index);
@@ -86,17 +87,30 @@ const Sidebar = ({}) => {
           <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === 0}
+              href={
+                process.env.NEXT_PUBLIC_SECURITY_STANDARD! +
+                process.env.NEXT_PUBLIC_DOMAIN! +
+                "/overview"
+              }
               onClick={(event) => handleListItemClick(event, 0)}
             >
               <ListItemIcon>
                 <BarChart />
               </ListItemIcon>
-              <ListItemText primary={t("navbar.item1")} />
+              <ListItemText
+                primary={t("navbar.item1")}
+                sx={{ textAlign: "start" }}
+              />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === 1}
+              href={
+                process.env.NEXT_PUBLIC_SECURITY_STANDARD! +
+                process.env.NEXT_PUBLIC_DOMAIN! +
+                "/requests"
+              }
               onClick={(event) => handleListItemClick(event, 1)}
             >
               <ListItemIcon>
@@ -108,6 +122,11 @@ const Sidebar = ({}) => {
           <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === 2}
+              href={
+                process.env.NEXT_PUBLIC_SECURITY_STANDARD! +
+                process.env.NEXT_PUBLIC_DOMAIN! +
+                "/employees"
+              }
               onClick={(event) => handleListItemClick(event, 2)}
             >
               <ListItemIcon>
@@ -119,6 +138,11 @@ const Sidebar = ({}) => {
           <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === 3}
+              href={
+                process.env.NEXT_PUBLIC_SECURITY_STANDARD! +
+                process.env.NEXT_PUBLIC_DOMAIN! +
+                "/certificates"
+              }
               onClick={(event) => handleListItemClick(event, 3)}
             >
               <ListItemIcon>
@@ -130,6 +154,11 @@ const Sidebar = ({}) => {
           <ListItem disablePadding>
             <ListItemButton
               selected={selectedIndex === 4}
+              href={
+                process.env.NEXT_PUBLIC_SECURITY_STANDARD! +
+                process.env.NEXT_PUBLIC_DOMAIN! +
+                "/roadmaps"
+              }
               onClick={(event) => handleListItemClick(event, 4)}
             >
               <ListItemIcon>

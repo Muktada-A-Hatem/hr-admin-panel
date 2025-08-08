@@ -1,11 +1,10 @@
 "use client";
 
-import { Opacity } from "@mui/icons-material";
+import { Opacity, Palette } from "@mui/icons-material";
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
 let theme = createTheme({
   cssVariables: true,
-  direction: "ltr",
   breakpoints: {
     values: {
       xs: 400, // Extra small (default)
@@ -19,12 +18,12 @@ let theme = createTheme({
     mode: "light",
     primary: {
       main: "#f89c1c",
-      light: "#f89c1c",
+      light: "#f89c1c33",
       dark: "#f78c1b",
       contrastText: "#ffffff",
     },
     secondary: {
-      main: "#F89C1C",
+      main: "#676767",
       light: "#F89C1C",
       dark: "#484848",
     },
@@ -40,28 +39,38 @@ let theme = createTheme({
     fontFamily: ["Tajawal", "Cairo"].join(","),
   },
   components: {
-    MuiButton: {
+    MuiTableRow: {
       styleOverrides: {
         root: {
-          height: "3.5rem",
-          fontSize: "2rem",
-          fontWeight: "800",
+          "&.MuiTableRow-hover:hover": {
+            // background: "red",
+            background: "var(--mui-palette-primary-light)",
+          },
         },
       },
     },
+    // MuiButton: {
+    //   styleOverrides: {
+    //     root: {
+    //       height: "3.5rem",
+    //       fontSize: "2rem",
+    //       fontWeight: "800",
+    //     },
+    //   },
+    // },
     MuiListItemButton: {
       styleOverrides: {
         root: {
           borderRadius: "5px",
           overflow: "hidden",
           "&.Mui-selected": {
-            backgroundColor: "var(--primary-color)",
+            backgroundColor: "var(--mui-palette-primary-main)",
           },
           "&.Mui-selected:hover": {
-            backgroundColor: "var(--primary-dark)",
+            backgroundColor: "var(--mui-palette-primary-dark)",
           },
           ":hover": {
-            backgroundColor: "var(--primary-light)",
+            backgroundColor: "var(--mui-palette-primary-light)",
           },
         },
       },
@@ -70,7 +79,9 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           color: "var(--secondary-color)",
-          ".Mui-selected &": { color: "var(--reverse-text-color)" },
+          ".Mui-selected &": {
+            color: "var(--mui-palette-primary-contrastText  )",
+          },
         },
       },
     },
@@ -82,9 +93,10 @@ let theme = createTheme({
       },
       styleOverrides: {
         primary: {
-          color: "var(--text-color)",
+          // color: "var(--text-color)",
+          textAlign: "start",
           ".Mui-selected &": {
-            color: "var(--reverse-text-color)",
+            color: "var(--mui-palette-primary-contrastText)",
           },
         },
       },
@@ -92,7 +104,7 @@ let theme = createTheme({
     MuiTextField: {
       styleOverrides: {
         root: {
-          backgroundColor: "var(--foreground-color)",
+          // backgroundColor: "var(--foreground-color)",
         },
       },
     },

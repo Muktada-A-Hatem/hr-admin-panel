@@ -1,3 +1,5 @@
+"use client";
+
 // Define an interface for the validation result
 interface PassProps {
   Validity: boolean;

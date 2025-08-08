@@ -20,7 +20,7 @@ const LangButton = () => {
   }
 
   return (
-    <FormControl>
+    <FormControl size="small">
       <InputLabel>Language</InputLabel>
       <Select
         value={i18n.language}

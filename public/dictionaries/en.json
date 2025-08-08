@@ -4,7 +4,7 @@
     "loginh2start": "Sign in to your ",
     "loginh2middle": "admin",
     "loginh2end": " panel.",
-    "logininputlabel1": "ACCOUNT NAME",
+    "logininputlabel1": "EMAIL",
     "logininputlabel2": "PASSWORD",
     "loginbuttonlabel": "LOGIN"
   },

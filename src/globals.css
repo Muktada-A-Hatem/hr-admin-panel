@@ -25,10 +25,12 @@
   align-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background-color: #0a0a0a;
+    --foreground-color: #ededed;
+    --text-color: #ffff;
+    --reverse-text-color: #000000;
   }
 }
 

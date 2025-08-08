@@ -1,50 +1,99 @@
+"use client";
+
 import React from "react";
 
 interface FancyHRprops {
-  width?: string;
+  vertical?: boolean;
+  length?: string;
   ballsize?: string;
+  thickness?: string;
 }
 
-const FancyHR: React.FC<FancyHRprops> = ({ width, ballsize }) => {
-  return (
-    <div
-      style={{
-        height: "1rem",
-        width: "100%",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+const FancyHR: React.FC<FancyHRprops> = ({
+  vertical = false,
+  length = "100%",
+  ballsize = "10px",
+  thickness = "2px",
+}) => {
+  if (!vertical) {
+    return (
       <div
         style={{
-          background: "var(--secondary-color)",
-          width: "10px",
-          height: "10px",
-          borderRadius: "10px",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+          width: length,
         }}
-      />
+      >
+        <div
+          style={{
+            background: "var(--secondary-color)",
+            width: ballsize,
+            height: ballsize,
+            borderRadius: ballsize,
+          }}
+        />
 
-      <div
-        style={{
-          border: "none",
-          background: "var(--secondary-color)",
-          height: "2px",
-          width: "100%",
-        }}
-      />
+        <div
+          style={{
+            border: "none",
+            background: "var(--secondary-color)",
+            height: thickness,
+            width: length,
+          }}
+        />
 
+        <div
+          style={{
+            background: "var(--secondary-color)",
+            width: ballsize,
+            height: ballsize,
+            borderRadius: ballsize,
+          }}
+        />
+      </div>
+    );
+  } else {
+    return (
       <div
         style={{
-          background: "var(--secondary-color)",
-          width: "10px",
-          height: "10px",
-          borderRadius: "10px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          height: length,
         }}
-      />
-    </div>
-  );
+      >
+        <div
+          style={{
+            background: "var(--secondary-color)",
+            width: ballsize,
+            height: ballsize,
+            borderRadius: ballsize,
+          }}
+        />
+
+        <div
+          style={{
+            border: "none",
+            background: "var(--secondary-color)",
+            height: length,
+            width: thickness,
+          }}
+        />
+
+        <div
+          style={{
+            background: "var(--secondary-color)",
+            width: ballsize,
+            height: ballsize,
+            borderRadius: ballsize,
+          }}
+        />
+      </div>
+    );
+  }
 };
 
 export default FancyHR;

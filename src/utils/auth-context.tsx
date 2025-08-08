@@ -1,3 +1,5 @@
+"use client";
+
 import React, {
   createContext,
   ReactNode,
@@ -32,13 +34,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           method: "GET",
           credentials: "include",
           headers: {
-            Cookies: `refreshToken=DGed6n4BDMDen8JB65J/Wq7l9frvbaUJl+VeQFKAVNY5Rkl4AXWEXCrjYST9qRikn/tnq9NCou+ijoaT8GWccA==;userID=${Cookies.get(
-              "userID"
-            )}`,
+            // Cookies: `refreshToken=${encodeURIComponent(
+            //   Cookies.get("refreshToken")!
+            // )}; userID=${Cookies.get("userID")};`,
+            // Cookies: `refreshToken=DTMJuXAjqKiUsv0JvrHu4%2B0v%2BxsLCdqrOO%2BMsAIJPrZHZL82Rvc0gbksaBqg2ZflS8u1Gl4SitOJgZglEkwVGg%3D%3D; userID=2`,
           },
         }
       );
-
       if (!response.ok) {
         if (response.status === 401) {
           if (window.location.pathname !== "/Login") {

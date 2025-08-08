@@ -80,8 +80,8 @@ export default function Login() {
         throw new Error(`HTTP error! status: ${response.status}`);
       } else {
         const JSONBody = await response.json();
-        Cookies.set("refreshToken", JSONBody.data.token, {});
-        Cookies.set("userID", JSONBody.data.userID, {});
+        // Cookies.set("refreshToken", JSONBody.data.token, {});
+        // Cookies.set("userID", JSONBody.data.userID, {});
       }
 
       // console.log(data);
@@ -156,26 +156,16 @@ export default function Login() {
             ) : null}
 
             <FancyHR />
-            {passError ? (
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="primary"
-                disabled
-              >
-                {t("login.loginbuttonlabel")}
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                variant="contained"
-                size="large"
-                color="primary"
-              >
-                {t("login.loginbuttonlabel")}
-              </Button>
-            )}
+            <Button
+              type="submit"
+              variant="contained"
+              size="large"
+              color="primary"
+              disabled={passError}
+              sx={{ height: "3.5rem", fontSize: "2rem", fontWeight: "800" }}
+            >
+              {t("login.loginbuttonlabel")}
+            </Button>
           </form>
           <Header Title="Meow"></Header>
         </div>

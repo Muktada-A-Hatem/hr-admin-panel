@@ -26,9 +26,7 @@ export default function Home() {
       <Sidebar></Sidebar>
       <div className={styles.home_content_container}>
         <Header Title="Muqtada Abdulrasool"></Header>
-        <div className={styles.content_container}>
-          <List Title="Employees" Type="emp" Variant="full"></List>
-        </div>
+        <div className={styles.content_container}></div>
       </div>
     </div>
   );
