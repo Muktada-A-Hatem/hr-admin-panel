@@ -54,6 +54,7 @@ const list: React.FC<ListProps> = ({
   const [tableSize, setTableSize] = React.useState<"small" | "medium">(
     "medium"
   );
+  let maxDenseSize = 700;
 
   const [currentPage, setCurrentPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pagination[0]);
@@ -77,15 +78,24 @@ const list: React.FC<ListProps> = ({
     }
   };
 
-  const handleChangeDense = () => {
+  React.useEffect(() => {
     if (density) {
-      setDensity(false);
-      setTableSize("medium");
-    } else {
-      setDensity(true);
       setTableSize("small");
+    } else {
+      setTableSize("medium");
     }
-  };
+  }, [density]);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerHeight < maxDenseSize && !density) {
+        setDensity(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+  }, []);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setCurrentPage(newPage);
@@ -103,8 +113,10 @@ const list: React.FC<ListProps> = ({
       <div className={styles.list_header_container}>
         <div className={styles.list_header_left_side}>
           {/* Rendering the title*/}
-          {title == "" ? null : <Typography variant="h4">{title}</Typography>}
-          <FancyHR vertical ballsize="0px" length="80%" thickness="1px" />
+          <div className={styles.list_title}>
+            {title == "" ? null : <Typography variant="h4">{title}</Typography>}
+            <FancyHR vertical ballsize="0px" length="80%" thickness="1px" />
+          </div>
           {search ? (
             /* Rendering the search box*/
             <div className={styles.search_component}>
@@ -146,7 +158,6 @@ const list: React.FC<ListProps> = ({
             </div>
           ) : null}
         </div>
-
         {/* Rendering all custom components for actions*/}
         <div className={styles.list_header_right_side}>
           {func?.map((component, index) => (
@@ -155,14 +166,27 @@ const list: React.FC<ListProps> = ({
         </div>
       </div>
       {/* Rendering the table*/}
-      <TableContainer className={styles.scrollableContainer}>
+      <TableContainer
+        className={styles.scrollableContainer}
+        sx={{ tableLayout: "fixed" }}
+      >
         <Table stickyHeader aria-label="sticky table" size={tableSize}>
           {/* Rendering the header columns*/}
           <TableHead>
             <TableRow>
               {columns.map((columnName, index) => (
-                <TableCell key={index} align="left">
-                  {columnName}
+                <TableCell key={index} align="left" sx={{ maxWidth: "1rem" }}>
+                  <Typography
+                    sx={{
+                      display: "inline-block",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      width: "100%",
+                    }}
+                  >
+                    {columnName}
+                  </Typography>
                 </TableCell>
               ))}
             </TableRow>
@@ -193,8 +217,22 @@ const list: React.FC<ListProps> = ({
                   onDoubleClick={(event) => onclick(event, rowIndex)}
                 >
                   {row.map((cell, cellIndex) => (
-                    <TableCell key={cellIndex} align="left">
-                      {cell}
+                    <TableCell
+                      key={cellIndex}
+                      align="left"
+                      sx={{ maxWidth: "1rem" }}
+                    >
+                      <Typography
+                        sx={{
+                          display: "inline-block",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          width: "100%",
+                        }}
+                      >
+                        {cell}
+                      </Typography>
                     </TableCell>
                   ))}
                 </TableRow>
@@ -206,8 +244,10 @@ const list: React.FC<ListProps> = ({
         {dense ? (
           <FormControlLabel
             control={<Switch checked={density} />}
-            label="Dense padding"
-            onChange={handleChangeDense}
+            label="Dense Table"
+            onChange={() => {
+              setDensity(!density);
+            }}
           />
         ) : (
           <div />

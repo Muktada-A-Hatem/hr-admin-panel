@@ -17,6 +17,8 @@
   --nice-red: #b83b40;
   --nice-blue: #0c8ce9;
 
+  --global-padding: 2rem;
+
   height: 100%;
   min-height: 100dvh;
 
@@ -131,4 +133,10 @@ label {
   font-weight: 700;
 
   font-family: "Tajawal";
+}
+
+@media screen and ((max-width: 700px) or (max-height: 700px)) {
+  :root {
+    --global-padding: 1rem;
+  }
 }

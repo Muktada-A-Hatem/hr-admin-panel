@@ -13,8 +13,6 @@ import { Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import { Checkpassword } from "@/utils/password-checker";
-import Header from "@/components/header/header";
-import { cookies } from "next/headers";
 
 interface RequestBody {
   email: string;
@@ -167,7 +165,6 @@ export default function Login() {
               {t("login.loginbuttonlabel")}
             </Button>
           </form>
-          <Header Title="Meow"></Header>
         </div>
 
         <div className={styles.login_divider_container}></div>
