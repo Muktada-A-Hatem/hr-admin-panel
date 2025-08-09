@@ -11,7 +11,6 @@ import Plus from "@mui/icons-material/Add";
 
 export default function Home() {
   const handleRowClick = (row: any, key: number) => {
-    console.log(key);
     window.location.href = window.location.href + "/" + key.toString();
   };
 
@@ -115,7 +114,7 @@ export default function Home() {
 
   return (
     <div className={styles.home_page_container}>
-      <Sidebar></Sidebar>
+      <Sidebar index={2}></Sidebar>
       <div className={styles.home_content_container}>
         <Header Title="Muqtada Abdulrasool"></Header>
         <div className={styles.content_container}>
@@ -123,6 +122,7 @@ export default function Home() {
             title="Table of Employees"
             search
             dense
+            denseButton
             func={[
               <Button size="medium" variant="contained" endIcon={<Plus />}>
                 <Typography

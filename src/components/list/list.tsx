@@ -27,6 +27,7 @@ interface ListProps {
   title?: string;
   search?: boolean;
   dense?: boolean;
+  denseButton?: boolean;
   func?: React.ReactNode[];
   columns: string[];
   rows: any[][];
@@ -39,6 +40,7 @@ const list: React.FC<ListProps> = ({
   title = "",
   search = false,
   dense = false,
+  denseButton = false,
   func = [],
   columns,
   rows,
@@ -51,10 +53,12 @@ const list: React.FC<ListProps> = ({
   const [searchAttribute, setSearchAttribute] = React.useState(0);
 
   const [density, setDensity] = React.useState(false);
+  const [denseOption, setDenseOption] = React.useState(denseButton);
   const [tableSize, setTableSize] = React.useState<"small" | "medium">(
     "medium"
   );
   let maxDenseSize = 700;
+  let maxDenseContainer = 500;
 
   const [currentPage, setCurrentPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(pagination[0]);
@@ -67,7 +71,6 @@ const list: React.FC<ListProps> = ({
 
   const handleSearchAttribute = (event: any, child: any) => {
     setSearchAttribute(child.props["data-index"]);
-    console.log(child.props["data-index"]);
   };
 
   const handleHrefClick = (
@@ -90,6 +93,14 @@ const list: React.FC<ListProps> = ({
     const handleResize = () => {
       if (window.innerHeight < maxDenseSize && !density) {
         setDensity(true);
+      } else {
+        setDensity(false);
+      }
+
+      if (window.innerWidth < maxDenseContainer) {
+        setDenseOption(false);
+      } else {
+        setDenseOption(true);
       }
     };
 
@@ -241,7 +252,7 @@ const list: React.FC<ListProps> = ({
         </Table>
       </TableContainer>
       <div className={styles.paginationContainer}>
-        {dense ? (
+        {denseOption ? (
           <FormControlLabel
             control={<Switch checked={density} />}
             label="Dense Table"

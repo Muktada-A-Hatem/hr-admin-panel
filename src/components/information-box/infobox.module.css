@@ -1,0 +1,13 @@
+.infobox_container {
+  /* border: 2px solid pink; */
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.line_container {
+  display: flex;
+  justify-content: space-between;
+}

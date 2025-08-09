@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ Title }) => {
   return (
     <div className={styles.header_container}>
       <div className={styles.right_side}>
-        <UserPFP></UserPFP>
+        <UserPFP size="4rem" image="/images/User.png"></UserPFP>
         <Typography
           variant="h3"
           sx={{

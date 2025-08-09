@@ -21,11 +21,14 @@ import Email from "@mui/icons-material/Email";
 import People from "@mui/icons-material/PeopleAlt";
 import Certificates from "@mui/icons-material/WorkspacePremium";
 import Roadmaps from "@mui/icons-material/AddRoad";
-import { Key } from "@mui/icons-material";
 
-const Sidebar = ({}) => {
+interface SidebarProps {
+  index?: number;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ index = 0 }) => {
   const navBreakPoint = 800;
-  const [selectedIndex, setSelectedIndex] = React.useState(1);
+  const [selectedIndex, setSelectedIndex] = React.useState(index);
   const [Shrunken, setShrunken] = React.useState(false);
   const [Locked, setLocked] = React.useState(true);
   const { t } = useTranslation();
@@ -40,7 +43,6 @@ const Sidebar = ({}) => {
         }
       });
       NavElemant.addEventListener("mouseleave", (event) => {
-        // console.log("Mouse left parent or its child:", event.target);
         NavElemant.classList.remove("expand");
         setShrunken(false);
       });
@@ -90,7 +92,7 @@ const Sidebar = ({}) => {
               href={
                 process.env.NEXT_PUBLIC_SECURITY_STANDARD! +
                 process.env.NEXT_PUBLIC_DOMAIN! +
-                "/overview"
+                "/"
               }
               onClick={(event) => handleListItemClick(event, 0)}
             >

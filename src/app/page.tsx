@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div className={styles.home_page_container}>
-      <Sidebar></Sidebar>
+      <Sidebar index={0}></Sidebar>
       <div className={styles.home_content_container}>
         <Header Title="Muqtada Abdulrasool"></Header>
         <div className={styles.content_container}></div>

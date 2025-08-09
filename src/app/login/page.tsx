@@ -81,8 +81,6 @@ export default function Login() {
         // Cookies.set("refreshToken", JSONBody.data.token, {});
         // Cookies.set("userID", JSONBody.data.userID, {});
       }
-
-      // console.log(data);
     } catch (e) {
       console.log(e);
     }
@@ -103,8 +101,6 @@ export default function Login() {
 
   const formSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("Account:", accountName);
-    console.log("Password:", password);
     fetchDataFromSwaggerAPI(accountName, password);
   };
   return (

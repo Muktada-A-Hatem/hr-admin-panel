@@ -1,19 +1,34 @@
 "use client";
 
+import { Widgets } from "@mui/icons-material";
 import styles from "./user-pfp.module.css";
 
 import React from "react";
 
 interface UserPFPProps {
-  roundness?: number;
-  lineThickness?: number;
+  size?: string;
+  roundness?: string;
+  lineThickness?: string;
   image?: string;
 }
 
-const UserPFP: React.FC<UserPFPProps> = ({ roundness, lineThickness }) => {
+const UserPFP: React.FC<UserPFPProps> = ({
+  roundness = "100%",
+  lineThickness = "2px",
+  image = "images/User.png",
+  size = "3.5rem",
+}) => {
   return (
-    <div className={styles.pfp_container}>
-      <img src="images/User.png" className={styles.pfp}></img>
+    <div
+      className={styles.pfp_container}
+      style={{
+        borderRadius: roundness,
+        border: "solid var(--mui-palette-secondary-main)" + " " + lineThickness,
+        width: size,
+        maxWidth: size,
+      }}
+    >
+      <img className={styles.pfp} src={image}></img>
     </div>
   );
 };

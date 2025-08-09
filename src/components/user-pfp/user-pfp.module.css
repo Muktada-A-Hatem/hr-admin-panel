@@ -1,17 +1,11 @@
 .pfp_container {
-  min-height: 3.5rem;
-  min-width: 3.5rem;
-  height: 3.5rem;
-  width: 3.5rem;
-
-  height: 100%;
-  aspect-ratio: 1/1;
-
-  border-radius: 100%;
-
-  border: 2px solid var(--secondary-color);
-
+  min-width: 2rem;
+  max-width: 20rem;
+  aspect-ratio: 1 / 1;
   overflow: hidden;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
 }
 
 .pfp {

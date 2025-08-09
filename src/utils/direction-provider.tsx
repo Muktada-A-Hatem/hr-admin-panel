@@ -11,7 +11,6 @@ export default function DirectionProvider({
   const { i18n } = useTranslation();
 
   useEffect(() => {
-    console.log("Current language:", i18n.language);
     document.documentElement.setAttribute(
       "dir",
       i18n.language === "ar" ? "rtl" : "ltr"
